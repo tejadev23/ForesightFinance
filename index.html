@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Prediction</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Include Chart.js -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        label {
+            font-weight: 600;
+            color: #555;
+        }
+
+        input[type="text"], input[type="submit"] {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .result {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 20px;
+            color: #333;
+        }
+
+        .result ul {
+            list-style: none;  
+            padding: 0;       
+        }
+
+        .result li {
+            background: #e0f7fa; 
+            margin: 5px 0;      
+            padding: 10px;      
+            border-radius: 5px; 
+            font-weight: 600;   
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 14px;
+            color: #888;
+        }
+
+        #myChart {
+            margin-top: 20px;
+            max-width: 100%;
+            height: 400px; /* Adjust height as needed */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>ForeSight Finance</h1>
+        <form action="/predict" method="POST">
+            <label for="stock">Enter Stock Ticker:</label>
+            <input type="text" id="stock" name="stock" placeholder="AAPL, MSFT, etc." required>
+
+            <label for="days">Prediction Days:</label>
+            <input type="text" id="days" name="days" placeholder="Number of days to predict" required>
+
+            <input type="submit" value="Predict">
+        </form>
+
+        {% if prediction %}
+            <div class="result">
+                <h2>Prediction Results</h2>
+                <ul>
+                    {% for date, price in prediction.items() %}
+                        <li><strong>Date:</strong> {{ date }} - <strong>Predicted Price:</strong> ${{ price }}</li>
+                    {% endfor %}
+                </ul>
+                <canvas id="myChart"></canvas> <!-- Add canvas for chart -->
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="footer">
+        <p>Foresight Finance | Done by Team 18(AIML)</p>
+    </div>
+
+    <script>
+        // Check if prediction data is available
+        {% if prediction %}
+            const labels = [{% for date in prediction.keys() %} '{{ date }}'{% if not loop.last %}, {% endif %}{% endfor %}];
+            const data = [ {% for price in prediction.values() %} {{ price }}{% if not loop.last %}, {% endif %}{% endfor %} ];
+
+            const ctx = document.getElementById('myChart').getContext('2d');
+            const myChart = new Chart(ctx, {
+                type: 'line', // Line chart
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Predicted Stock Price',
+                        data: data,
+                        borderColor: 'rgba(75, 192, 192, 1)', // Line color
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)', // Fill color
+                        borderWidth: 2,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            title: {
+                                display: true,
+                                text: 'Stock Price (USD)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Date'
+                            }
+                        }
+                    }
+                }
+            });
+        {% endif %}
+    </script>
+</body>
+</html>

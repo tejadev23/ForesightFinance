@@ -1,0 +1,29 @@
+DATASET Company Names
+
+AAPL  # Apple Inc.
+MSFT  # Microsoft Corporation
+GOOGL # Alphabet Inc. (Class A)
+GOOG  # Alphabet Inc. (Class C)
+AMZN  # Amazon.com Inc.
+META  # Meta Platforms Inc.
+JPM   # JPMorgan Chase & Co.
+BAC   # Bank of America Corporation
+WFC   # Wells Fargo & Company
+GS    # Goldman Sachs Group Inc.
+JNJ   # Johnson & Johnson
+PFE   # Pfizer Inc.
+MRK   # Merck & Co., Inc.
+UNH   # UnitedHealth Group Incorporated
+PG    # Procter & Gamble Company
+KO    # Coca-Cola Company
+PEP   # PepsiCo, Inc.
+UL    # Unilever PLC
+TSLA  # Tesla, Inc.
+F     # Ford Motor Company
+GM    # General Motors Company
+XOM   # Exxon Mobil Corporation
+CVX   # Chevron Corporation
+BP    # BP PLC
+WMT   # Walmart Inc.
+TGT   # Target Corporation
+COST  # Costco Wholesale Corporation
